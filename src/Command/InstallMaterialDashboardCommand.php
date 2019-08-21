@@ -13,6 +13,8 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use App\Entity\User;
 
 class InstallMaterialDashboardCommand extends Command
@@ -109,7 +111,6 @@ class InstallMaterialDashboardCommand extends Command
         }
 
         $this->createEnv($dbName, $dbUser, $dbPassword);
-        $this->clearCache($output);
         $this->doctrineDatabaseCreate($output);
         $this->doctrineSchemaUpdate($output);
 
@@ -118,7 +119,7 @@ class InstallMaterialDashboardCommand extends Command
             $this->createUser($user, $password);
         }
 
-        $this->doctrineSchemaUpdate($output);
+        $this->assetsInstall($output);
 
         $io->success('The Material Dashboard for Symfony is installed! Now start your project and navigate to /admin');
     }
@@ -142,32 +143,35 @@ class InstallMaterialDashboardCommand extends Command
         $oldDbUrl = "DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name";
         $newDbUrl = sprintf("DATABASE_URL=mysql://%s:%s@127.0.0.1:3306/%s", $dbUser, $dbPassword, $dbName);
         $envLocal = str_replace($oldDbUrl, $newDbUrl, $envContents);
-        file_put_contents(".env", $envLocal);
+        file_put_contents(".env.local", $envLocal);
     }
 
     private function doctrineDatabaseCreate(OutputInterface $output)
     {
-        $command = $this->getApplication()->find('doctrine:database:create');
+        $process = new Process(
+            'bin/console doctrine:database:create'
+        );
 
-        $arguments = [
-            'command' => 'doctrine:database:create'
-        ];
+        $process->run();
 
-        $greetInput = new ArrayInput($arguments);
-        $returnCode = $command->run($greetInput, $output);
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
     }
 
     private function doctrineSchemaUpdate(OutputInterface $output)
     {
-        $command = $this->getApplication()->find('doctrine:schema:update');
+        $process = new Process(
+            'bin/console doctrine:schema:update --force'
+        );
 
-        $arguments = [
-            'command' => 'doctrine:schema:update',
-            '--force'  => true,
-        ];
+        $process->run();
 
-        $greetInput = new ArrayInput($arguments);
-        $returnCode = $command->run($greetInput, $output);
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
     }
 
     private function assetsInstall(OutputInterface $output)
@@ -176,18 +180,6 @@ class InstallMaterialDashboardCommand extends Command
 
         $arguments = [
             'command' => 'assets:install'
-        ];
-
-        $greetInput = new ArrayInput($arguments);
-        $returnCode = $command->run($greetInput, $output);
-    }
-
-    private function clearCache(OutputInterface $output)
-    {
-        $command = $this->getApplication()->find('cache:clear');
-
-        $arguments = [
-            'command' => 'cache:clear'
         ];
 
         $greetInput = new ArrayInput($arguments);
