@@ -11,17 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use App\Entity\User;
 
 class InstallMaterialDashboardCommand extends Command
 {
-    private $passwordEncoder;
-    private $entityManager;
-
     protected static $defaultName = 'app:install-material-dashboard';
 
     protected function configure()
@@ -31,13 +25,6 @@ class InstallMaterialDashboardCommand extends Command
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
-    }
-
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder) {
-        $this->passwordEncoder = $passwordEncoder;
-        $this->entityManager = $em;
-
-        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -126,15 +113,11 @@ class InstallMaterialDashboardCommand extends Command
 
     private function createUser($user, $password)
     {
-        $userObject = new User();
-        $userObject->setRoles(['ROLE_SUPER_ADMIN']);
-        $userObject->setEmail($user);
-        $userObject->setPassword($this->passwordEncoder->encodePassword(
-            $userObject,
-            $password
-        ));
-        $this->entityManager->persist($userObject);
-        $this->entityManager->flush();
+        $process = new Process(
+            sprintf('bin/console app:create-user --user=%s --password=%s', $user, $password)
+        );
+
+        $process->run();
     }
 
     private function createEnv($dbName, $dbUser, $dbPassword)
@@ -163,7 +146,7 @@ class InstallMaterialDashboardCommand extends Command
     private function doctrineSchemaUpdate(OutputInterface $output)
     {
         $process = new Process(
-            'bin/console doctrine:schema:update --force'
+            'bin/console doctrine:schema:update --forcecd'
         );
 
         $process->run();
