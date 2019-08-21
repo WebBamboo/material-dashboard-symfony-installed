@@ -109,6 +109,7 @@ class InstallMaterialDashboardCommand extends Command
         }
 
         $this->createEnv($dbName, $dbUser, $dbPassword);
+        $this->clearCache($output);
         $this->doctrineDatabaseCreate($output);
         $this->doctrineSchemaUpdate($output);
 
@@ -175,6 +176,18 @@ class InstallMaterialDashboardCommand extends Command
 
         $arguments = [
             'command' => 'assets:install'
+        ];
+
+        $greetInput = new ArrayInput($arguments);
+        $returnCode = $command->run($greetInput, $output);
+    }
+
+    private function clearCache(OutputInterface $output)
+    {
+        $command = $this->getApplication()->find('cache:clear');
+
+        $arguments = [
+            'command' => 'cache:clear'
         ];
 
         $greetInput = new ArrayInput($arguments);
