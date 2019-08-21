@@ -8,10 +8,16 @@
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.3.1",
+        "symfony/form": "4.3.*",
         "symfony/framework-bundle": "4.3.*",
-        "symfony/yaml": "4.3.*"
+        "symfony/security-bundle": "4.3.*",
+        "symfony/validator": "4.3.*",
+        "symfony/yaml": "4.3.*",
+        "webbamboo/material-dashboard-symfony": "^1.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "symfony/profiler-pack": "^1.0"
     },
     "config": {
         "preferred-install": {

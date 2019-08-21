@@ -1,0 +1,14 @@
+material_dashboard:
+  menu_header:
+      title: Dashboard
+      anchor: /
+  sidebar_background: /bundles/materialdashboard/img/sidebar-1.jpg
+  color: green 
+  menu:
+      admin:
+          label: Home
+          icon: dashboard
+  user_menu:
+      app_logout:
+          label: Logout
+  notifications_enabled: true
