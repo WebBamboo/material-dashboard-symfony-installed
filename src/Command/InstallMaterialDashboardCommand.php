@@ -142,7 +142,7 @@ class InstallMaterialDashboardCommand extends Command
         $oldDbUrl = "DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name";
         $newDbUrl = sprintf("DATABASE_URL=mysql://%s:%s@127.0.0.1:3306/%s", $dbUser, $dbPassword, $dbName);
         $envLocal = str_replace($oldDbUrl, $newDbUrl, $envContents);
-        file_put_contents(".env.local", $envLocal);
+        file_put_contents(".env", $envLocal);
     }
 
     private function doctrineDatabaseCreate(OutputInterface $output)
