@@ -146,7 +146,7 @@ class InstallMaterialDashboardCommand extends Command
     private function doctrineSchemaUpdate(OutputInterface $output)
     {
         $process = new Process(
-            'bin/console doctrine:schema:update --forcecd'
+            'bin/console doctrine:schema:update --force'
         );
 
         $process->run();
