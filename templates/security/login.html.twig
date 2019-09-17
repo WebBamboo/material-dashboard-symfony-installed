@@ -1,42 +1,84 @@
-{% extends 'base.html.twig' %}
+{% extends "@MaterialDashboard/landing-base.html.twig" %}
 
-{% block title %}Log in!{% endblock %}
+{% block meta_title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+<div class="row align-items-center">
+    <div class="col-md-9 ml-auto mr-auto mb-3 text-center">
+        <h3>Log in to see how you can speed up your web development with out of the box CRUD for #User Management and more. </h3>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+        <form method="post">
+            <input type="hidden" name="_token" value="DUo9p4bTP9AM6OP5fjyxL2bbR4Eq02m1eMb5VSsQ">
+            <div class="card card-login mb-3">
+                <div class="card-header card-header-primary text-center">
+                    <h4 class="card-title"><strong>Login</strong></h4>
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.username }}<br> <a class="btn btn-sm btn-info" href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="bmd-form-group is-filled">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">email</i>
+                            </span>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email..." value="{{ last_username }}" name="email" required="">
+                        </div>
+                    </div>
+                    <div class="bmd-form-group mt-3 is-filled">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">lock_outline</i>
+                            </span>
+                            </div>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password..." value="secret" required="">
+                        </div>
+                    </div>
+                    <div class="form-check mr-auto ml-3 mt-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="_remember_me"> Remember me
+                            <span class="form-check-sign">
+                            <span class="check"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+                <div class="card-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-link btn-lg">Lets Go</button>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-6">
+                <a href="http://127.0.0.1:8000/password/reset" class="text-light">
+                    <small>Forgot password?</small>
+                </a>
+            </div>
+            <div class="col-6 text-right">
+                <a href="http://127.0.0.1:8000/register" class="text-light">
+                    <small>Create new account</small>
+                </a>
+            </div>
         </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+    </div>
+</div>
 {% endblock %}

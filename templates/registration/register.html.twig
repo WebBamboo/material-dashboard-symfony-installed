@@ -1,15 +1,71 @@
-{% extends 'base.html.twig' %}
+{% extends "@MaterialDashboard/landing-base.html.twig" %}
 
-{% block title %}Register{% endblock %}
+{% block meta_title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+<div class="row align-items-center">
+    <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+        {{ form_start(registrationForm) }}
+            <input type="hidden" name="_token" value="y4tXVDkAb9UEXB7pYSo8FYF76odRhwaEo74isR7h">
+            <div class="card card-login mb-3">
+                <div class="card-header card-header-primary text-center">
+                    <h4 class="card-title"><strong>Register</strong></h4>
+                    {% if registrationForm.vars.valid == false %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>
+                            <ul>
+                                {# Loop through every form item #}
+                                {% for child in registrationForm.children %}
+                                    {# Display the errors of the form item #}
+                                    {% for error in child.vars.errors %}
+                                        <li>{{error.message}}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-body ">
+                    <div class="bmd-form-group mt-3 is-filled">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">email</i>
+                                </span>
+                            </div>
+                            {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Email...'}}) }}
+                        </div>
+                    </div>
+                    <div class="bmd-form-group mt-3 is-filled">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">lock_outline</i>
+                                </span>
+                            </div>
+                            {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Password...'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-check mr-auto ml-3 mt-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="policy" name="registration_form[agreeTerms]" checked="">
+                            <span class="form-check-sign">
+                                <span class="check"></span>
+                            </span>
+                            I agree with the  <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                <div class="card-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-link btn-lg">Create account</button>
+                </div>
+            </div>
+            {% do registrationForm.agreeTerms.setRendered %}
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}

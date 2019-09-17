@@ -1,14 +1,31 @@
 material_dashboard:
-  menu_header:
-      title: Dashboard
-      anchor: /
-  sidebar_background: /bundles/materialdashboard/img/sidebar-1.jpg
-  color: green 
-  menu:
-      admin:
-          label: Home
-          icon: dashboard
-  user_menu:
-      app_logout:
-          label: Logout
-  notifications_enabled: true
+    menu_header:
+        title: Material Dashboard
+        anchor: /
+    sidebar_background: /bundles/materialdashboard/img/sidebar-1.jpg
+    color: green 
+    menu:
+        admin:
+            label: Home
+            icon: dashboard
+    user_menu:
+        app_logout:
+            label: Logout
+    landing_top_menu:
+        app_register:
+            label: Register
+            icon: person_add
+        app_login:
+            label: Login
+            icon: fingerprint
+    landing_bottom_menu:
+        external_creative_tim:
+            label: Creative Tim
+        external_about_us:
+            label: About us
+        external_blog:
+            label: Blog
+        external_licenses:
+            label: Licenses
+    notifications_enabled: true
+    example_menu: true
