@@ -1,0 +1,44 @@
+{% extends "@MaterialDashboard/landing-base.html.twig" %}
+
+{% block topNavigation %}
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
+        <div class="container">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand" href="{{ menuHeader().anchor }}">{{ menuHeader().title }}</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+                <span class="navbar-toggler-icon icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    {% for path, item in landingMenuItems() %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ getItemRoute(path, item) }}">
+                            <i class="material-icons">{{ item.icon }}</i>
+                            <p>{{ item.label }}</p>
+                            </a>
+                        </li>
+                    {% endfor %}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">
+                                <i class="material-icons">exit_to_app</i>
+                                <p>Logout ({{ app.user.username }})</p>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">
+                                <i class="material-icons">fingerprint</i>
+                                <p>Login</p>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

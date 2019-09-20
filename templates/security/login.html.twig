@@ -1,4 +1,4 @@
-{% extends "@MaterialDashboard/landing-base.html.twig" %}
+{% extends "landing.html.twig" %}
 
 {% block meta_title %}Log in!{% endblock %}
 
@@ -74,7 +74,7 @@
                 </a>
             </div>
             <div class="col-6 text-right">
-                <a href="http://127.0.0.1:8000/register" class="text-light">
+                <a href="{{ path("app_register") }}" class="text-light">
                     <small>Create new account</small>
                 </a>
             </div>

@@ -1,0 +1,113 @@
+{% extends "@MaterialDashboard/base.html.twig" %}
+
+{% block meta_title %}User profile{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_start(profileForm, {'action' : path('user_profile_update')}) }}
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">Edit Profile</h4>
+                                <p class="card-category">User information</p>
+                            </div>
+                            <div class="card-body ">
+                                <div class="row">
+                                    {% for message in app.flashes('success_profile') %}
+                                    <span class="col-sm-2"></span>
+                                    <div class="alert alert-success col-sm-7">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Success - </b> {{ message }}
+                                        </span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group bmd-form-group is-filled">
+                                            {{ form_widget(profileForm.email, {'attr': {'placeholder': 'Email...'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    {{ form_end(profileForm) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_start(changePasswordForm, {'action' : path('user_password_update')}) }}
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title">Change password</h4>
+                                <p class="card-category">Password</p>
+                            </div>
+                            <div class="card-body ">
+                                <div class="row">
+                                    {% for message in app.flashes('success_password') %}
+                                    <span class="col-sm-2"></span>
+                                    <div class="alert alert-success col-sm-7">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Success - </b> {{ message }}
+                                        </span>
+                                    </div>
+                                    {% endfor %}
+                                    {% for message in app.flashes('fail_password') %}
+                                    <span class="col-sm-2"></span>
+                                    <div class="alert alert-danger col-sm-7">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>
+                                            <b> Warning - </b> {{ message }}
+                                        </span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="row">
+                                        <label class="col-sm-2 col-form-label" for="input-current-password">Current Password</label>
+                                        <div class="col-sm-7">
+                                            <div class="form-group bmd-form-group is-filled">
+                                            {{ form_widget(changePasswordForm.oldPassword, {'attr': {'placeholder': 'Current Password'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="input-password">New Password</label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group bmd-form-group">
+                                            {{ form_widget(changePasswordForm.newPassword.first, {'attr': {'placeholder': 'New Password'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="input-password-confirmation">Confirm New Password</label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group bmd-form-group">
+                                            {{ form_widget(changePasswordForm.newPassword.second, {'attr': {'placeholder': 'ConfirmNew Password'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="submit" class="btn btn-primary">Change password</button>
+                            </div>
+                        </div>
+                    {{ form_end(changePasswordForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

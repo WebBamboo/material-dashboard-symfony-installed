@@ -15,9 +15,6 @@ material_dashboard:
         app_register:
             label: Register
             icon: person_add
-        app_login:
-            label: Login
-            icon: fingerprint
     landing_bottom_menu:
         external_creative_tim:
             label: Creative Tim
