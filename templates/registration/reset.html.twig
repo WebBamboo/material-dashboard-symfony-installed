@@ -1,0 +1,70 @@
+{% extends "landing.html.twig" %}
+
+{% block meta_title %}Reset password{% endblock %}
+
+{% block body %}
+<div class="row align-items-center">
+    <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+        {{ form_start(resetForm) }}
+            <div class="card card-login mb-3">
+                <div class="card-header card-header-primary text-center">
+                    <h4 class="card-title"><strong>Forgot Password</strong></h4>
+                    {% if resetForm.vars.valid == false %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>
+                            <ul>
+                                {# Loop through every form item #}
+                                {% for child in resetForm.children %}
+                                    {# Display the errors of the form item #}
+                                    {% for error in child.vars.errors %}
+                                        <li>{{error.message}}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>
+                            <b> Success - </b> {{ message }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                    {% for message in app.flashes('fail') %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>
+                            <b> Oh no! - </b> {{ message }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="card-body ">
+                    <div class="bmd-form-group mt-3 is-filled">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">email</i>
+                                </span>
+                            </div>
+                            {{ form_widget(resetForm.email, {'attr': {'placeholder': 'Email...'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-link btn-lg">Send Password Reset Link</button>
+                </div>
+            </div>
+        {{ form_end(resetForm) }}
+    </div>
+</div>
+{% endblock %}

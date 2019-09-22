@@ -13,6 +13,7 @@
         "symfony/framework-bundle": "4.3.*",
         "symfony/process": "4.3.*",
         "symfony/security-bundle": "4.3.*",
+        "symfony/swiftmailer-bundle": "^3.2",
         "symfony/validator": "4.3.*",
         "symfony/yaml": "4.3.*",
         "webbamboo/material-dashboard-symfony": "^1.0"

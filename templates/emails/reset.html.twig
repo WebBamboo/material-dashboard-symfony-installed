@@ -1,0 +1,8 @@
+{# templates/emails/reset.html.twig #}
+<h3>Password reset information</h3>
+
+Hi {{ user.getEmail }}! Thanks for contacting us. Follow the directions below to reset your password..
+
+<a href="{{ url('app_do_reset', {'hash': user.getResetPasswordHash}) }}">Reset Your Password</a>.
+
+Thanks!

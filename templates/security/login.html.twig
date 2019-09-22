@@ -23,6 +23,16 @@
                         </span>
                     </div>
                     {% endif %}
+                    {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <span>
+                            <b> Success - </b> {{ message }}
+                        </span>
+                    </div>
+                    {% endfor %}
                     {% if app.user %}
                         <div class="mb-3">
                             You are logged in as {{ app.user.username }}<br> <a class="btn btn-sm btn-info" href="{{ path('app_logout') }}">Logout</a>
@@ -69,7 +79,7 @@
         </form>
         <div class="row">
             <div class="col-6">
-                <a href="http://127.0.0.1:8000/password/reset" class="text-light">
+                <a href="{{ path("app_reset_password") }}" class="text-light">
                     <small>Forgot password?</small>
                 </a>
             </div>

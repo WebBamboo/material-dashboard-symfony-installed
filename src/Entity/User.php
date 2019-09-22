@@ -35,6 +35,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=23, nullable=true)
+     */
+    private $reset_password_hash;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,5 +116,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getResetPasswordHash(): ?string
+    {
+        return $this->reset_password_hash;
+    }
+
+    public function setResetPasswordHash(?string $reset_password_hash): self
+    {
+        $this->reset_password_hash = $reset_password_hash;
+
+        return $this;
     }
 }

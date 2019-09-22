@@ -21,7 +21,7 @@ class UserCRUDController extends AbstractController
     /**
      * @Route("/profile", name="user_profile", methods={"GET"})
      */
-    public function profile(UserRepository $userRepository): Response
+    public function profile(): Response
     {
         $user = $this->getUser();
         $profileForm = $this->createForm(ProfileType::class, $user);
@@ -37,7 +37,7 @@ class UserCRUDController extends AbstractController
     /**
      * @Route("/update_profile", name="user_profile_update", methods={"POST"})
      */
-    public function update_profile(Request $request, UserRepository $userRepository): Response
+    public function update_profile(Request $request): Response
     {
         $user = $this->getUser();
         $profileForm = $this->createForm(ProfileType::class, $user);
@@ -56,17 +56,13 @@ class UserCRUDController extends AbstractController
     /**
      * @Route("/update_password", name="user_password_update", methods={"POST"})
      */
-    public function update_password(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function update_password(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = $this->getUser();
         $changePasswordForm = $this->createForm(ChangePasswordType::class, $user);
         $changePasswordForm->handleRequest($request);
         if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
             $oldPasswordString = $changePasswordForm->get('oldPassword')->getData();
-            $encodedOldPassword = $passwordEncoder->encodePassword(
-                $user,
-                $oldPasswordString
-            );
             
             if($passwordEncoder->isPasswordValid($user, $oldPasswordString))
             {
