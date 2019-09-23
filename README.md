@@ -8,7 +8,7 @@ This is a bootstrap for the Material Dashboard for Symfony composer package
 ```sh
 $ git clone git@github.com:WebBamboo/material-dashboard-symfony-installed.git YourDashboardName
 $ cd YourDashboardName
-$ composer install
+$ composer update
 $ php bin/console app:install-material-dashboard
 
 # At this point you are ready, you can run your app
